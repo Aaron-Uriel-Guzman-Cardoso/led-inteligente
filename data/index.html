@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control de Matriz RGB</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    header {
+      background-color: #3b5998;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    main {
+      padding: 20px;
+    }
+    .color-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .color-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      border-bottom: 1px solid #ddd;
+      cursor: pointer;
+    }
+    .color-item:hover {
+      background-color: #f1f1f1;
+    }
+    .color-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    .toggle-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+    }
+    .toggle-label {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #3b5998;
+    }
+    .toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 25px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ddd;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 19px;
+      width: 19px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+    input:checked + .slider {
+      background-color: #3b5998;
+    }
+    input:checked + .slider:before {
+      transform: translateX(25px);
+    }
+    .intensity-container {
+      margin: 20px 0;
+    }
+    .intensity-label {
+      font-size: 1rem;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    input[type="range"] {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      margin: 10px 0;
+    }
+    input[type="range"]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 8px;
+      background: #ddd;
+      border-radius: 5px;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #3b5998;
+      border-radius: 50%;
+      cursor: pointer;
+      margin-top: -6px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Control de Matriz RGB</h1>
+  </header>
+  <main>
+    <ul class="color-list">
+      <li class="color-item" onclick="selectColor('#ffcc00')">
+        <span class="color-circle" style="background-color: #ffcc00;"></span> Mostaza
+      </li>
+      <li class="color-item" onclick="selectColor('#ffd700')">
+        <span class="color-circle" style="background-color: #ffd700;"></span> Amarillo Cromo
+      </li>
+      <li class="color-item" onclick="selectColor('#00ff00')">
+        <span class="color-circle" style="background-color: #00ff00;"></span> Verde Fluorescente
+      </li>
+      <li class="color-item" onclick="selectColor('#40e0d0')">
+        <span class="color-circle" style="background-color: #40e0d0;"></span> Turquesa
+      </li>
+      <li class="color-item" onclick="selectColor('#00ffff')">
+        <span class="color-circle" style="background-color: #00ffff;"></span> Cian
+      </li>
+      <li class="color-item" onclick="selectColor('#4682b4')">
+        <span class="color-circle" style="background-color: #4682b4;"></span> Azul Cielo
+      </li>
+      <li class="color-item" onclick="selectColor('#0000ff')">
+        <span class="color-circle" style="background-color: #0000ff;"></span> Azul
+      </li>
+      <li class="color-item" onclick="selectColor('#800080')">
+        <span class="color-circle" style="background-color: #800080;"></span> Púrpura
+      </li>
+      <!-- Nuevos colores -->
+      <li class="color-item" onclick="selectColor('#f5f5f5')">
+        <span class="color-circle" style="background-color: #f5f5f5;"></span> Blanco Cálido
+      </li>
+      <li class="color-item" onclick="selectColor('#ffffff')">
+        <span class="color-circle" style="background-color: #ffffff;"></span> Blanco Suave
+      </li>
+      <li class="color-item" onclick="selectColor('#f0f8ff')">
+        <span class="color-circle" style="background-color: #f0f8ff;"></span> Blanco Luz Diurna
+      </li>
+      <li class="color-item" onclick="selectColor('#dcdcdc')">
+        <span class="color-circle" style="background-color: #dcdcdc;"></span> Blanco Frío
+      </li>
+      <li class="color-item" onclick="selectColor('#ff0000')">
+        <span class="color-circle" style="background-color: #ff0000;"></span> Rojo
+      </li>
+      <li class="color-item" onclick="selectColor('#d70040')">
+        <span class="color-circle" style="background-color: #d70040;"></span> Carmesí
+      </li>
+      <li class="color-item" onclick="selectColor('#fa8072')">
+        <span class="color-circle" style="background-color: #fa8072;"></span> Salmón
+      </li>
+      <li class="color-item" onclick="selectColor('#ff00ff')">
+        <span class="color-circle" style="background-color: #ff00ff;"></span> Magenta
+      </li>
+      <li class="color-item" onclick="selectColor('#f0e6f6')">
+        <span class="color-circle" style="background-color: #f0e6f6;"></span> Rosa Claro
+      </li>
+      <li class="color-item" onclick="selectColor('#e6e6fa')">
+        <span class="color-circle" style="background-color: #e6e6fa;"></span> Lavanda
+      </li>
+    </ul>
+    <div class="toggle-container">
+      <span class="toggle-label">Encender/Apagar</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="power" name="power" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="intensity-container">
+      <label class="intensity-label" for="intensity">💡 Intensidad</label>
+      <input type="range" id="intensity" name="intensity" min="0" max="255" value="128">
+    </div>
+  </main>
+  <script>
+    function selectColor(color) {
+      console.log("Color seleccionado:", color); // Este valor se enviará al servidor para actualizar la matriz
+      // Aquí podrías enviar el color seleccionado al backend, por ejemplo:
+      // fetch('/updateColor', { method: 'POST', body: JSON.stringify({ color: color }) });
+
+      // Si quieres simular cómo se cambia el color en la matriz sin cambiar el fondo:
+      // Aquí pondrías la lógica para cambiar el color de los LEDs en la matriz RGB.
+    }
+  </script>
+</body>
+</html>
